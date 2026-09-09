@@ -1,0 +1,40 @@
+import express from 'express';
+import cors from 'cors';
+import dotenv from "dotenv";
+import connectDB from './config/db.js';
+import foodRouter from './routes/foodRoutes.js';
+import userRouter from './routes/userRoutes.js';
+import cartRouter from './routes/cartRoutes.js';
+import orderRouter from './routes/orderRoutes.js';
+import { stripeWebhook } from './controllers/stripeWebhookController.js';
+import adminOrderRouter from './routes/adminOrderRouter.js';
+
+
+dotenv.config();
+
+const app = express();
+const PORT = 5000;
+
+app.use(cors());
+
+app.post(
+    "/api/stripe-webhook", //localhost:5000/api/stripe-webhook
+    express.raw({ type: "application/json" }),
+    stripeWebhook
+);
+
+app.use(express.json());
+
+connectDB();
+
+app.use("/api/foods",foodRouter);
+app.use("/images",express.static('uploads'));  //url for getting the uploaded images
+app.use("/api/users",userRouter);
+app.use("/api/cart",cartRouter);
+app.use("/api/orders", orderRouter);
+app.use("/api/admin/orders",adminOrderRouter);
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+    console.log(`API is accessible at: http://localhost:${PORT}/`);
+})
