@@ -10,25 +10,32 @@ const AdminSidebar = () => {
 
   const handleSidebar = () => {
     setCollapsed(!collapsed);
-  }
+  };
 
   return (
-    <div className={`bg-warning-subtle border-end d-flex flex-column p-3 ${collapsed ? 'sidebar-sm' : "sidebar-lg"}`}>
-      <Button className="bg-transparent border-0 text-dark align-self-end mb-3" onClick={handleSidebar}>
-        {
-          collapsed ? <PanelLeftOpen /> : <PanelLeftClose size={18} />
-        }
+    <div
+      className={`bg-warning-subtle border-end d-flex flex-column p-0 flex-shrink-0 shadow z-2 
+        ${collapsed ? 'sidebar-sm' : "sidebar-lg"}`}
+    >
+      <Button className={`bg-transparent border-0 text-dark mt-3
+      ${collapsed ? "align-self-center" : "align-self-end"}`} onClick={handleSidebar}
+      >
+        {collapsed ? (
+          <PanelLeftOpen size={20} />
+        ) : (
+          <PanelLeftClose size={20} />
+        )}
       </Button>
-      <Nav className="flex-column">
+      <hr />
+      <Nav className="flex-column gap-1">
         {menuItems.map(({ name, path, icon: Icon }) => (
-          <NavLink
-            key={path}
-            to={path}
+          <NavLink key={path} to={path}
             className={({ isActive }) =>
-              `d-flex align-items-center gap-3 text-decoration-none text-dark p-2 rounded mb-2 sidebar-link ${isActive
-                ? "bg-warning"
-                : ""
-              }`
+              `d-flex align-items-center text-decoration-none text-dark py-2 px-3
+              ${collapsed ? "justify-content-center px-2" : "gap-3"}
+              ${isActive
+                ? "sidebar-button-color border-end border-warning border-4"
+                : "sidebar-link"}`
             }
           >
             <Icon size={20} />

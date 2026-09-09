@@ -129,7 +129,7 @@ const Orders = () => {
                 <td>
                   <div className='d-flex justify-content-center gap-2'>
                     <OverlayTrigger placement='top' overlay={<Tooltip>View Order</Tooltip>}>
-                      <Button variant="outline-secondary" className='border-0' onClick={() => handleView(order)}>
+                      <Button className='bg-transparent text-dark border-0' onClick={() => handleView(order)}>
                         <MdViewList size={20} />
                       </Button>
                     </OverlayTrigger>

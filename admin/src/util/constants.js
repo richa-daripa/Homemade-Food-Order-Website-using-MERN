@@ -7,12 +7,12 @@ export const menuItems = [
   //  icon: LayoutDashboard,
   //},
   {
-    name: "Foods",
+    name: "Food Items",
     path: "/admin/foods",
     icon: Utensils,
   },
   {
-    name: "Orders",
+    name: "Manage Orders",
     path: "/admin/orders",
     icon: ShoppingBag,
   },

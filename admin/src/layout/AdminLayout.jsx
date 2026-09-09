@@ -6,10 +6,11 @@ import { ToastContainer} from 'react-toastify';
 const AdminLayout = () => {
   return (
     <div className="vh-100 d-flex flex-column">
-      <AdminNavbar/>
+      <AdminNavbar />
+
       <ToastContainer />
 
-      <div className="d-flex min-vh-100 overflow-hidden">
+      <div className="d-flex flex-grow-1 overflow-hidden">
         <AdminSidebar />
 
         <main className="flex-grow-1 overflow-auto p-4 bg-light">
