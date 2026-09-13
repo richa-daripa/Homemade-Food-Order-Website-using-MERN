@@ -15,6 +15,7 @@ const Orders = () => {
   const [loading, setLoading] = useState(true);
   const [viewOrderModal, setViewOrderModal] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchAllOrders = async () => {
     try {
@@ -83,12 +84,18 @@ const Orders = () => {
     )
   }
 
+  const filteredOrders = orders.filter((order) =>
+    order._id.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       <Container fluid className="py-4">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h3 >Customer Orders</h3>
-          <Form.Control type="search" placeholder="Search orders..." className='w-25' />
+          <Form.Control type="search" placeholder="Search orders by ID..." className='w-25'
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)} />
         </div>
 
         <Table bordered size="sm">
@@ -104,14 +111,17 @@ const Orders = () => {
             </tr>
           </thead>
           <tbody className='text-center'>
-            {orders.map((order, index) => (
+            {filteredOrders.map((order, index) => (
               <tr key={index}>
-                <td>#OD{order._id}</td>
+                <td>#{order._id}</td>
                 <td>{formateOrderDate(order.orderedAt)}</td>
                 <td>{order.items.length}</td>
                 <td>₹ {order.amount.toFixed(2)}</td>
                 <td>
                   <Form.Select value={order.paymentStatus} size='sm'
+                    disabled={order.paymentMethod !== "Cash on Delivery" ||
+                      order.paymentStatus === "Paid"
+                    }
                     onChange={(e) => handlePaymentStatus(order._id, e.target.value)}>
                     <option value="Pending">Pending</option>
                     <option value="Paid">Paid</option>
@@ -120,6 +130,7 @@ const Orders = () => {
                 </td>
                 <td>
                   <Form.Select value={order.status} size='sm'
+                    disabled={order.status === "Order Delivered"}
                     onChange={(e) => handleOrderStatus(order._id, e.target.value)}>
                     <option value="Food is Preparing">Food is Preparing</option>
                     <option value="Out_for Delivery">Out for Delivery</option>

@@ -32,6 +32,11 @@ export const updateOrderStatus = async (req, res) => {
                 success: false, message: "Order not found",
             });
         }
+        if (order.status === "Order Delivered") {
+            return res.status(400).json({
+                message: "Delivered orders cannot be updated"
+            });
+        }
         res.status(200).json({
             success: true, message: "Order status updated successfully"
         })
@@ -57,6 +62,11 @@ export const updatePaymentStatus = async (req, res) => {
         if (!order) {
             return res.status(400).json({
                 success: false, message: "Order not found",
+            });
+        }
+        if (order.paymentMethod !== "Cash on Delivery") {
+            return res.status(400).json({
+                message: "Payment status can only be updated for COD orders"
             });
         }
         res.status(200).json({

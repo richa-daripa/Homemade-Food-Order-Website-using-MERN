@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card, ListGroup, Modal } from 'react-bootstrap'
+import { deliveryFee, GST, packagingFee } from '../../../frontend/src/utils/constants';
 
 const ViewOrder = ({ selectedOrder, setSelectedOrder, setViewOrderModal, viewOrderModal }) => {
 
@@ -18,46 +19,53 @@ const ViewOrder = ({ selectedOrder, setSelectedOrder, setViewOrderModal, viewOrd
                         <span>#OD{selectedOrder._id}</span>
                     </Card.Header>
                     <Card.Body>
-
-                        <Card.Text className='border-bottom pb-1 border-2'>
-                            <strong className="d-block mb-2">
-                                Items Ordered
-                            </strong>
-
+                        <div className='border-bottom pb-1 border-2'>
+                            <strong className="d-block mb-2">Items Ordered</strong>
                             <ListGroup variant="flush">
-                                {
-                                    selectedOrder?.items?.map(order => (
-                                        <ListGroup.Item className="d-flex justify-content-between align-items-start">
-                                            <div className="ms-2 me-auto">
-                                                <div>{order.name}</div>
-                                                <small className='text-secondary'>Qty: {order.quantity}</small>
-                                            </div>
-                                            <span>{order.unitPrice}</span>
-                                        </ListGroup.Item>
-                                    ))
+                                {selectedOrder?.items?.map(order => (
+                                    <ListGroup.Item className="d-flex justify-content-between align-items-start">
+                                        <div className="ms-2 me-auto">
+                                            <div>{order.name}</div>
+                                            <small className='text-secondary'>Qty: {order.quantity} x ₹{order.unitPrice}</small>
+                                        </div>
+                                        <span>₹ {order.unitPrice * order.quantity}</span>
+                                    </ListGroup.Item>
+                                ))
                                 }
+                                <ListGroup.Item className="d-flex justify-content-between align-items-start border-top border-2 border-secondary rounded">
+                                    <div className="ms-2 me-auto">
+                                        <div className='fw-semibold'>Total Amount:</div>
+                                        <small className='text-secondary'>DeliveryFee: ₹{deliveryFee}, GST: ₹{GST}, PackagingFee: ₹{packagingFee}</small>
+                                    </div>
+                                    <span>₹ {selectedOrder.amount}</span>
+                                </ListGroup.Item>
                             </ListGroup>
-                        </Card.Text>
-                        <Card.Text >
-                            <strong className="d-block mb-2">
-                                Delivery To
-                            </strong>
+                        </div>
+                        {selectedOrder.specialInstructions?.length > 0 && (
                             <div >
-                                <span>
-                                    {firstName + " " + lastName}
-                                </span>
+                                <strong className="d-block mb-2">Special Instruction</strong>
+                                <ul>
+                                    {selectedOrder.specialInstructions.map((info, index) => (
+                                        <li key={index}>{info}</li>
+                                    )
+                                    )}
+                                </ul>
+                            </div>
+                        )}
+                        <hr />
+                        <div>
+                            <strong className="d-block mb-2"> Delivery To </strong>
+                            <div >
+                                <span>{firstName + " " + lastName}</span>
                                 <br />
                                 {address1}, {address2 && `, ${address2}`} {city} - {pincode}
                                 <br />
-                                <span>
-                                    Phone: {phone}
-                                </span>
+                                <span>Phone: {phone}</span>
                             </div>
-                        </Card.Text>
+                        </div>
                     </Card.Body>
                 </Card>
             </Modal.Body>
-
         </Modal>
     )
 }
