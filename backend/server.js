@@ -7,13 +7,14 @@ import userRouter from './routes/userRoutes.js';
 import cartRouter from './routes/cartRoutes.js';
 import orderRouter from './routes/orderRoutes.js';
 import { stripeWebhook } from './controllers/stripeWebhookController.js';
-import adminOrderRouter from './routes/adminOrderRouter.js';
+import adminOrderRouter from './routes/adminOrderRoutes.js';
+import adminFoodRouter from './routes/adminFoodRoutes.js';
 
 
 dotenv.config();
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 
@@ -27,12 +28,14 @@ app.use(express.json());
 
 connectDB();
 
-app.use("/api/foods",foodRouter);
-app.use("/images",express.static('uploads'));  //url for getting the uploaded images
-app.use("/api/users",userRouter);
-app.use("/api/cart",cartRouter);
+app.use("/api/foods", foodRouter);
+app.use("/images", express.static('uploads'));  //url for getting the uploaded images
+app.use("/api/users", userRouter);
+app.use("/api/cart", cartRouter);
 app.use("/api/orders", orderRouter);
-app.use("/api/admin/orders",adminOrderRouter);
+
+app.use("/api/admin/foods", adminFoodRouter);
+app.use("/api/admin/orders", adminOrderRouter);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import AdminNavbar from "../components/Navbar";
 import AdminSidebar from "../components/Sidebar";
-import { ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 const AdminLayout = () => {
   return (

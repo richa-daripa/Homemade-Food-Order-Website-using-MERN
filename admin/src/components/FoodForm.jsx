@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Container, Form, Row, Col, Button } from 'react-bootstrap'
-import axios from 'axios'
-import { toast } from 'react-toastify'
 import { Link } from 'react-router-dom'
-import { foodCategory, IMAGE_URL } from '../util/constants'
+import { foodCategory } from '../util/config'
 import { ImageUp } from 'lucide-react'
+import { IMAGE_URL } from '../util/api'
 
 const FoodForm = ({ foodData, setFoodData, onSubmit, submitText }) => {
 

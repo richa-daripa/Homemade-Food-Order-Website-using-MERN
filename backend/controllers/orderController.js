@@ -133,8 +133,6 @@ const verifyPayment = async (req, res) => {
         const { sessionId } = req.params; // req.params contains route parameters from the URL path /payment-status/:sessionId
         const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-        console.log(session);
-
         //Is payment paid?
         if (session.payment_status !== "paid") {
             return res.status(200).json({

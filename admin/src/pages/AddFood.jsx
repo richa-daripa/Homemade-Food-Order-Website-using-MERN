@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react'
 import axios from 'axios'
-import { FOOD_API_URL} from '../util/constants'
 import { toast } from 'react-toastify'
 import FoodForm from '../components/FoodForm'
+import { ADMIN_FOOD_API_URL } from '../util/api'
 
 const initialState = {
   name: "",
@@ -26,15 +26,13 @@ const AddFood = () => {
     }
 
     try {
-      //console.log(foodData);
-
       const formData = new FormData();
 
       Object.entries(foodData).forEach(([key, value]) => {
         formData.append(key, value);
       });
 
-      const response = await axios.post(`${FOOD_API_URL}/`, formData)
+      const response = await axios.post(`${ADMIN_FOOD_API_URL}/`, formData)
 
       //if (response.status === 201 || response.status === 200) {
       //  // Reset form

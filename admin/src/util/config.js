@@ -28,9 +28,6 @@ export const menuItems = [
   //},
 ];
 
-export const FOOD_API_URL = 'http://localhost:5000/api/foods'
-export const ALL_CUSTOMERS_ORDER_API_URL = 'http://localhost:5000/api/admin/orders'
 
-export const IMAGE_URL = "http://localhost:5000/images"
 
 export const foodCategory = ['Breakfast', 'Dessert', 'NonVeg', 'Snacks', 'Nutritious', 'Lunch', 'Dinner', 'Curry'];

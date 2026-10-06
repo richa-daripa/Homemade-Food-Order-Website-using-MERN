@@ -1,8 +1,6 @@
 import userModel from "../models/UserSchema.js";
 
 export const syncUser = async (req, res) => {
-    console.log(req.user);
-
     try {
         const { uid, email } = req.user;
         const { name } = req.body;

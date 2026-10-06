@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react'
 import { Button, Container, Form, OverlayTrigger, Table, Tooltip } from 'react-bootstrap'
 import '../style.css'
-import { ALL_CUSTOMERS_ORDER_API_URL } from '../util/constants'
 import { useState } from 'react'
 import axios from 'axios'
-import { FaTrash } from "react-icons/fa";
 import { MdViewList } from "react-icons/md";
 import { toast } from 'react-toastify';
 import { formateOrderDate } from '../../../frontend/src/utils/formatting'
 import ViewOrder from '../components/ViewOrder'
+import { ADMIN_ORDERS_API_URL } from '../util/api'
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -19,7 +18,7 @@ const Orders = () => {
 
   const fetchAllOrders = async () => {
     try {
-      const response = await axios.get(`${ALL_CUSTOMERS_ORDER_API_URL}/`);
+      const response = await axios.get(`${ADMIN_ORDERS_API_URL}/`);
       setOrders(response.data.data);
     } catch (error) {
       toast.error("Error fetching orders from backend");
@@ -34,7 +33,7 @@ const Orders = () => {
 
   const handlePaymentStatus = async (orderId, status) => {
     try {
-      await axios.put(`${ALL_CUSTOMERS_ORDER_API_URL}/${orderId}/payment-status`,
+      await axios.put(`${ADMIN_ORDERS_API_URL}/${orderId}/payment-status`,
         { status: status }
       );
 
@@ -53,7 +52,7 @@ const Orders = () => {
 
   const handleOrderStatus = async (orderId, status) => {
     try {
-      await axios.put(`${ALL_CUSTOMERS_ORDER_API_URL}/${orderId}/order-status`,
+      await axios.put(`${ADMIN_ORDERS_API_URL}/${orderId}/order-status`,
         { status: status }
       );
       setOrders((prev) => (

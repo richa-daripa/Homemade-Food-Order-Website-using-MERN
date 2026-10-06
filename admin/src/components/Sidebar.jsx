@@ -1,6 +1,6 @@
 import { Button, Nav } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import { menuItems } from "../util/constants";
+import { menuItems } from "../util/config";
 import "../style.css";
 import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { useState } from "react";

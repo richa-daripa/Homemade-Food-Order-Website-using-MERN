@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import FoodForm from '../components/FoodForm';
-import { FOOD_API_URL } from '../util/constants';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { Spinner } from 'react-bootstrap';
+import { ADMIN_FOOD_API_URL } from '../util/api';
 
 const EditFood = () => {
   const { id } = useParams();
@@ -15,7 +15,7 @@ const EditFood = () => {
     const fetchSingleFood = async () => {
 
       try {
-        const response = await axios.get(`${FOOD_API_URL}/${id}`);
+        const response = await axios.get(`${ADMIN_FOOD_API_URL}/${id}`);
         setFoodData(response.data);
 
       } catch (err) {
@@ -39,7 +39,7 @@ const EditFood = () => {
       if (foodData.image instanceof File) {
         formData.append("image", foodData.image);
       }
-      const response = await axios.put(`${FOOD_API_URL}/${id}`, formData);
+      const response = await axios.put(`${ADMIN_FOOD_API_URL}/${id}`, formData);
 
       toast.success(response.data.message);
       navigate("/admin/foods");

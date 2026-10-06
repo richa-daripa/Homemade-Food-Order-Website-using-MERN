@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { FOOD_API_URL, IMAGE_URL } from '../util/constants';
+import { ADMIN_FOOD_API_URL, FOOD_API_URL, IMAGE_URL } from '../util/api';
 import { Button, Card, Col, Container, Row, Spinner, Badge, } from "react-bootstrap";
 import { Pencil, Trash2, Plus } from "lucide-react";
 import { Link } from 'react-router-dom';
@@ -16,7 +16,7 @@ const Foods = () => {
             const response = await axios.get(`${FOOD_API_URL}/`);
             setFoods(response.data.data);
         } catch (err) {
-            console.log("Error fetching data from backend");
+            toast.error("Error fetching data from backend");
             setFoods([]);
         } finally {
             setLoading(false);
@@ -41,7 +41,7 @@ const Foods = () => {
         if (!confirmDelete) return;
 
         try {
-            const response = await axios.delete(`${FOOD_API_URL}/${food_id}`);
+            const response = await axios.delete(`${ADMIN_FOOD_API_URL}/${food_id}`);
             //fetchFoods(); //If your backend modifies other data (e.g., sorting, timestamps), you can refetch else
 
             // Remove the deleted food from state
