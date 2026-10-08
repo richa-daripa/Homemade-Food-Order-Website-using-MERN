@@ -25,30 +25,33 @@ const userSchema = new Schema({
         default: Date.now
     },
 
-    cartDetails: [
-        {
-            _id: false,
-            
-            foodId: {
-                type: Schema.Types.ObjectId,
-                ref: "foodModel",
-                required: true
-            },
-            name: {
-                type: String,
-                required: true
-            },
-            unitPrice: {
-                type: Number,
-                required: true
-            },
-            quantity: {
-                type: Number,
-                required: true,
-                min: 1
+    cartDetails: {
+        type: [
+            {
+                _id: false,
+
+                foodId: {
+                    type: Schema.Types.ObjectId,
+                    ref: "foodModel",
+                    required: true
+                },
+                name: {
+                    type: String,
+                    required: true
+                },
+                unitPrice: {
+                    type: Number,
+                    required: true
+                },
+                quantity: {
+                    type: Number,
+                    required: true,
+                    min: 1
+                }
             }
-        }
-    ]
+        ],
+        default: []
+    }
 }, {
     timestamps: true,
     versionKey: false

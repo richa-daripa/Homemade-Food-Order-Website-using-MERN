@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged, signOut, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, googleProvider } from '../services/firebaseConfig';
@@ -12,6 +12,8 @@ export const AuthProvider = ({ children }) => {
   const [authLoading, setAuthLoading] = useState(true);
   const navigate = useNavigate();
   const [signUpError, setSignUpError] = useState("");
+  const [logoutMsg, setLogoutMsg] = useState("");
+  const [logoutType, setLogoutType] = useState("");
 
   const [authModal, setAuthModal] = useState(null);
 
@@ -30,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 
       await syncUser(userCredential.user);
 
-      setUser(userCredential.user );
+      setUser(userCredential.user);
 
       return true;
 
@@ -62,9 +64,13 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await signOut(auth);
+      setLogoutMsg("You have successfully logged out");
+      setLogoutType("success");
       navigate('/');
     } catch (error) {
-      alert("Logout failed:", error);
+      console.error("Logout failed:", error);
+      setLogoutMsg("Sorry! unable to log out. Please try again.");
+      setLogoutType("failure");
     }
   };
 
@@ -93,7 +99,8 @@ export const AuthProvider = ({ children }) => {
     openLogin,
     openSignUp,
     closeModal,
-    authLoading
+    authLoading,
+    logoutMsg, setLogoutMsg, logoutType
   }
 
   return (

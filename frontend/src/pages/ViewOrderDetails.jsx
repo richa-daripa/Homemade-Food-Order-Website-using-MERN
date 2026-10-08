@@ -1,13 +1,15 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
 import { Badge, Card, Container, ListGroup, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { getAuthConfig } from '../utils/authAxios';
 import { formateOrderDate, getOrderStatus } from '../utils/formatting';
 import axios from 'axios';
-import { deliveryFee, GST, ORDER_API_URL, packagingFee } from '../utils/constants';
+import { deliveryFee, GST, packagingFee } from '../utils/constants';
 import { Info } from 'lucide-react';
+import { ORDER_API_URL } from '../services/api';
+import '../style.css';
 
 const ViewOrderDetails = () => {
     const { orderId } = useParams();
@@ -15,6 +17,7 @@ const ViewOrderDetails = () => {
     const { user } = useAuth();
     const [order, setOrder] = useState({});
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     const viewOrder = async () => {
         try {
@@ -24,10 +27,10 @@ const ViewOrderDetails = () => {
                 config
             )
             setOrder(response.data.data);
-            console.log(order);
 
         } catch (error) {
-            console.log("Error fetching order's details from backend:", error);
+            console.error("Error fetching order's details from backend:", error);
+            setError(true);
         } finally {
             setLoading(false);
         }
@@ -45,13 +48,17 @@ const ViewOrderDetails = () => {
         )
     }
 
+    if (error) {
+        return <Navigate to="/error" replace />;
+    }
+
     const { firstName, lastName, address1, address2, city, pincode, phone } = order.deliveryAddress || {};
     const statusUI = getOrderStatus(order.status);
     const StatusIcon = statusUI.icon;
 
     return (
         <Container className="my-4 py-3">
-            <Card className="border-0 shadow-sm mx-auto" style={{ maxWidth: "750px" }}>
+            <Card className="border-0 shadow-sm mx-auto container-width" >
                 <Card.Body>
                     <Card className="mb-3 border-0 bg-body-tertiary">
                         <Card.Header className={`${statusUI.className}`}>
@@ -69,12 +76,12 @@ const ViewOrderDetails = () => {
                                             {item.name}
                                             <small className='text-secondary ms-2'>x {item.quantity}</small>
                                         </div>
-                                        <span className='fw-bold'>₹ {item.unitPrice}</span>
+                                        <span className='fw-semibold'>₹ {item.unitPrice}</span>
                                     </ListGroup.Item>
                                 ))}
                             </ListGroup>
                             <hr />
-                            <div className='d-flex justify-content-between align-items-center fw-bold'>
+                            <div className='d-flex justify-content-between align-items-center'>
                                 <div className="d-flex align-items-center gap-2">
                                     <h5 className='mb-0'>Total Bill</h5>
                                     <OverlayTrigger
@@ -105,37 +112,37 @@ const ViewOrderDetails = () => {
                                     </OverlayTrigger>
                                 </div>
 
-                                <span className='fs-5'>₹ {order.amount}</span>
+                                <strong className='fs-5 fw-semibold'>₹ {order.amount}</strong>
                             </div>
                         </Card.Body>
                     </Card>
                     <Card className="mb-3 border-0 bg-body-tertiary">
                         <Card.Body>
                             <Card.Title>Order Details</Card.Title>
-                            <Card.Text>
+                            <div>
                                 <small className="text-secondary d-block">Order ID</small>
                                 <span>#OD{order._id}</span>
-                            </Card.Text>
-                            <Card.Text>
+                            </div>
+                            <div className='my-4'>
                                 <small className="text-secondary d-block">
                                     Delivery To
                                 </small>
-                                <div >
+                                <div>
                                     <span className='fw-medium text-muted'>
                                         {firstName} {lastName}
                                     </span>
                                     <br />
-                                    {address1}, {address2 && `, ${address2}`} {city} - {pincode}
+                                    {address1} {address2 && `, ${address2}`}, {city} - {pincode}
                                     <br />
                                     <span className='text-muted'>
                                         Mobile: {phone}
                                     </span>
                                 </div>
-                            </Card.Text>
-                            <Card.Text>
+                            </div>
+                            <div>
                                 <small className="text-secondary d-block">Order Placed at</small>
                                 <span>{formateOrderDate(order.orderedAt)}</span>
-                            </Card.Text>
+                            </div>
                         </Card.Body>
                     </Card>
                     <Card className="border-0 bg-body-tertiary">

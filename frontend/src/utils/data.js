@@ -21,7 +21,7 @@ export const menu_list = [
     {
         menu_name: "Breakfast",
         menu_image: menu_1,
-        availableText: "Available from 8:00 AM to 11:00 AM"
+        availableText: "Available from 7:30 AM to 10:30 AM"
     },
     {
         menu_name: "Dessert",
@@ -35,7 +35,7 @@ export const menu_list = [
     {
         menu_name: "Lunch",
         menu_image: menu_3,
-        availableText: "Available from 12:00 PM to 3:00 PM"
+        availableText: "Available from 11:30 PM to 3:00 PM"
     },
     {
         menu_name: "NonVeg",
@@ -207,4 +207,11 @@ export const paymentMethods = [
         value: "Cash on Delivery",
         icon: BadgeIndianRupee,
     }
+];
+
+export const instructionOptions = [
+    "Less Spicy",
+    "Extra Spicy",
+    "Less Oil",
+    "Other"
 ];

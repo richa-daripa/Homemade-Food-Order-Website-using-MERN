@@ -2,7 +2,7 @@ import { StoreContext } from "../contexts/ContextAPI";
 import { useContext } from "react";
 import { ListGroup, Row, Col, Button } from "react-bootstrap";
 import { SquarePlus, SquareMinus, Trash2 } from 'lucide-react';
-import { IMAGE_URL } from "../utils/constants";
+import { IMAGE_URL } from "../services/api";
 
 const CartItem = ({ itemObj }) => {
     const { cartItems, addToCart, removeFromCart, handleDeleteConfirm } = useContext(StoreContext);

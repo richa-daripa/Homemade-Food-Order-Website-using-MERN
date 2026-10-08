@@ -5,7 +5,6 @@ import { FcGoogle } from "react-icons/fc";
 import { CircleX } from "lucide-react";
 import { useAuth } from '../hooks/useAuth';
 
-
 const Login = ({ show, onHide, forwardTo }) => {
 
     const { login, signInWithGoogle } = useAuth();
@@ -56,11 +55,13 @@ const Login = ({ show, onHide, forwardTo }) => {
             setGoogleLoading(true);
 
             await signInWithGoogle();
-            
+
         } catch (err) {
-            if (err.code !== 'auth/popup-closed-by-user') {
-                alert("Google sign-in failed. Please try again.");
+            if (err.code === 'auth/popup-closed-by-user') {
+                return;
             }
+            console.error("Google sign-in failed:", err);
+            setError("Google sign-in failed. Please try again.");
         } finally {
             setGoogleLoading(false);
         }
@@ -123,9 +124,6 @@ const Login = ({ show, onHide, forwardTo }) => {
 
                             <p className="mt-4 mb-0 text-center">New to Eatzio? <span className='custom-text-color custom-pointer' onClick={handleSwitchToSignup}>Sign Up</span></p>
                         </form>
-
-                        
-
                     </Modal.Body>
                 </Container>
             </Modal>

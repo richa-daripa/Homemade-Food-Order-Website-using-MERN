@@ -1,6 +1,6 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import axios from 'axios';
-import { CART_API_URL, FOOD_API_URL } from "../utils/constants";
+import { CART_API_URL, FOOD_API_URL } from "../services/api";
 import { getAuthConfig } from "../utils/authAxios";
 import { useAuth } from "../hooks/useAuth";
 
@@ -13,13 +13,15 @@ const StoreProvider = (props) => {
 
   const [cartItems, setCartItems] = useState([]);
   const [deleteItem, setDeleteItem] = useState(null);
+  const [error, setError] = useState(false);
 
   const fetchFoods = async () => {
     try {
       const response = await axios.get(`${FOOD_API_URL}/`);
       setFoodList(response.data.data);
     } catch (err) {
-      console.log("Error fetching food data from backend");
+      console.error("Error fetching food data from backend:", err);
+      setError(true);
     }
   }
 
@@ -36,7 +38,8 @@ const StoreProvider = (props) => {
       );
       setCartItems(response.data.data || []);
     } catch (error) {
-      console.log("Error fetching cart from backend");
+      console.error("Error fetching cart details from backend:", error);
+      setError(true);
     }
   };
 
@@ -60,7 +63,7 @@ const StoreProvider = (props) => {
     //}
 
     setCartItems((prev) => {
-      const existingItem = prev.find(item => item.foodId === itemId );
+      const existingItem = prev.find(item => item.foodId === itemId);
 
       if (existingItem) {
         return prev.map(item =>
@@ -71,7 +74,7 @@ const StoreProvider = (props) => {
       }
 
       // Get food information for optimistic UI
-      const food = foodList.find( item => item._id === itemId);
+      const food = foodList.find(item => item._id === itemId);
 
       return [
         ...prev,
@@ -94,7 +97,7 @@ const StoreProvider = (props) => {
     } catch (error) {
       //If API fails rollback
       setCartItems(previousCart);
-      console.log("Error adding item to plate", error);
+      console.error("Error adding item to plate:", error);
     }
   }
 
@@ -110,12 +113,12 @@ const StoreProvider = (props) => {
     //  return newCart;
     //})
 
-     setCartItems((prev) =>
-        prev.map(item =>
-            item.foodId === itemId && item.quantity > 1
-                ? { ...item, quantity: item.quantity - 1 }
-                : item
-        )
+    setCartItems((prev) =>
+      prev.map(item =>
+        item.foodId === itemId && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
     );
 
     try {
@@ -126,7 +129,7 @@ const StoreProvider = (props) => {
       )
     } catch (error) {
       setCartItems(previousCart);
-      console.log("Error removing item from plate", error);
+      console.error("Error removing item from plate:", error);
     }
   }
 
@@ -144,7 +147,7 @@ const StoreProvider = (props) => {
     //const itemId = deleteItem.foodId;
 
     setCartItems((prev) =>
-        prev.filter(item => item.foodId.toString() !== itemId)
+      prev.filter(item => item.foodId.toString() !== itemId)
     );
 
     setDeleteItem(null);
@@ -156,7 +159,7 @@ const StoreProvider = (props) => {
       )
     } catch (error) {
       setCartItems(previousCart);
-      console.log("Error deleting item from plate");
+      console.error("Error deleting item from plate:", error);
     }
   };
 
@@ -178,8 +181,8 @@ const StoreProvider = (props) => {
     //}
     //return totalAmount;
     return cartItems.reduce(
-        (total, item) => total + item.unitPrice * item.quantity,
-        0
+      (total, item) => total + item.unitPrice * item.quantity,
+      0
     );
   }
 
@@ -191,9 +194,9 @@ const StoreProvider = (props) => {
     //  }
     //}
     //return qtotal;
-     return cartItems.reduce(
-        (total, item) => total + item.quantity,
-        0
+    return cartItems.reduce(
+      (total, item) => total + item.quantity,
+      0
     );
   }
 
@@ -204,7 +207,8 @@ const StoreProvider = (props) => {
     removeFromCart,
     getTotalAmount,
     handleDelete, handleDeleteConfirm, deleteItem, handleDeleteCancel,
-    totalQuantity
+    totalQuantity,
+    error
   }
 
   return (

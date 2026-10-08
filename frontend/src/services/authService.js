@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getAuthConfig } from "../utils/authAxios";
-import { USER_API_URL } from "../utils/constants";
+import { USER_API_URL } from "../services/api";
 
 export const syncUser = async (firebaseUser) => {
 

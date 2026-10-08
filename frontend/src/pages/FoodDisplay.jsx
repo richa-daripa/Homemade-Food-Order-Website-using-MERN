@@ -1,15 +1,14 @@
 import React, { useContext, useState } from 'react'
 import { StoreContext } from '../contexts/ContextAPI';
 import DishCard from '../components/DishCard';
-import { useEffect } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
-import { Container, Row, Col, Button, Form, Toast } from 'react-bootstrap';
+import { Navigate, useSearchParams } from 'react-router-dom';
+import { Container, Row, Col, Form, Toast } from 'react-bootstrap';
 import '../style.css'
 import { FcOk } from 'react-icons/fc';
 import { menu_list, sortingOptions } from '../utils/data';
 
 const FoodDisplay = () => {
-    const { foodList } = useContext(StoreContext);
+    const { foodList, error } = useContext(StoreContext);
     const [show, setShow] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -61,6 +60,9 @@ const FoodDisplay = () => {
         setSearchParams(params);
     };
 
+    if(error){
+        return <Navigate to="/error" replace />;
+    }
 
     return (
         <Container fluid className='bg-custom-color py-5'>

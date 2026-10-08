@@ -172,6 +172,7 @@ const AddressSection = ({ register, errors, user }) => {
                                 <option>Chennai</option>
                                 <option>Mumbai</option>
                                 <option>Hyderabad</option>
+                                <option>Bengaluru</option>
                             </Form.Select>
                             <small className="text-danger">
                                 {errors.city?.message}

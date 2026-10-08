@@ -10,3 +10,7 @@ export function isPwdValid(value) {
   }
   return true;
 }
+
+export const FULL_NAME_REGEX = /^(?=.{4,}$)[a-zA-Z]+(?: [a-zA-Z]+)*$/;
+
+export const nameValidation = 'Must contain only alphabets and spaces, with at least 4 characters';

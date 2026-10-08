@@ -4,11 +4,11 @@ import { useAuth } from '../hooks/useAuth';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { getAuthConfig } from '../utils/authAxios';
-import { ORDER_API_URL } from '../utils/constants';
+import { ORDER_API_URL } from '../services/api';
 import { Button, Card, Container } from 'react-bootstrap';
 import { formateOrderDate, getOrderStatus } from '../utils/formatting';
 import { CalendarClock, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import empty_order from "../assets/img6.png";
 
 const MyOrders = () => {
@@ -16,6 +16,7 @@ const MyOrders = () => {
     const [orderList, setOrderList] = useState([]);
     const { user } = useAuth();
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     const fetchOrders = async () => {
         try {
@@ -26,7 +27,8 @@ const MyOrders = () => {
             )
             setOrderList(response.data.data);
         } catch (error) {
-            console.log("Error fetching orders list from backend:", error);
+            console.error("Error fetching orders list from backend:", error);
+            setError(true);
         } finally {
             setLoading(false);
         }
@@ -48,16 +50,20 @@ const MyOrders = () => {
         )
     }
 
+    if (error) {
+        return <Navigate to="/error" replace />;
+    }
+
     if (orderList.length === 0) {
         return (
-            <Container className="vh-100">
-                <div className="text-center py-5">
-                    <img src={empty_order} alt="" width="250" className="mt-5" />
-                    <h4>Oops! No orders yet</h4>
+            <Container className="vh-100 d-flex align-items-center justify-content-center">
+                <div className="text-center">
+                    <img src={empty_order} alt="" width="250" />
+                    <h3>No orders yet!</h3>
                     <p className="text-secondary">
                         Place your first order and let the flavors come to you.
                     </p>
-                    <Button as={Link} variant='warning' to="/menu" className='mt-5'>
+                    <Button as={Link} variant='warning' to="/menu" className='mt-3'>
                         Order Now
                     </Button>
                 </div>
@@ -77,14 +83,14 @@ const MyOrders = () => {
                     return (
                         <Card key={index} className='my-4 shadow-sm'>
                             <Card.Header className='text-secondary d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center'>
-                                <span>#OD{order._id.slice(-10)}...</span>
+                                <span>#OD{order._id.slice(0,8)}...</span>
                                 <div>
                                     <CalendarClock size={18} className='me-2' />Placed at
                                     <small className='ms-1'>{formateOrderDate(order.orderedAt)}</small>
                                 </div>
                             </Card.Header>
                             <Card.Body className='d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3'>
-                                <div className='flex-grow-1' style={{ maxWidth: "280px", minWidth: "180px" }}>
+                                <div>
                                     {order.items.slice(0, 2).map((item, index) => (
                                         <div key={index} >
                                             {item.name} × {item.quantity}
@@ -99,7 +105,7 @@ const MyOrders = () => {
                                 </div>
                                 <div>
                                     <small className="text-secondary d-block">Total amount</small>
-                                    <strong> ₹ {order.amount.toFixed(2)}</strong>
+                                    <span className="fw-medium"> ₹ {order.amount.toFixed(2)}</span>
                                 </div>
                                 <div
                                     className={`d-flex align-items-center gap-3 px-4 py-2 rounded-pill ${statusUI.className}`}>

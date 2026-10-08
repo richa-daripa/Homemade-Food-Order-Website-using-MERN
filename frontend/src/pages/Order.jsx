@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { Card, Container, Row, Col, Button, ListGroup } from "react-bootstrap";
 import { CalendarDays, CircleCheckBig, CreditCard, House, IndianRupee, Phone, Ticket, User } from "lucide-react";
-import { CHARGES_AND_TAXES, IMAGE_URL, ORDER_API_URL } from "../utils/constants";
+import { CHARGES_AND_TAXES } from "../utils/constants";
 import '../style.css'
 import { useAuth } from "../hooks/useAuth";
 import { getAuthConfig } from "../utils/authAxios";
 import axios from 'axios';
 import { formateOrderDate } from "../utils/formatting";
+import { ORDER_API_URL } from "../services/api";
 
 const Order = () => {
     const { orderId } = useParams();
@@ -15,6 +16,7 @@ const Order = () => {
     const navigate = useNavigate();
     const [orderData, setOrderData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     const fetchOrder = async () => {
         try {
@@ -26,7 +28,8 @@ const Order = () => {
             setOrderData(response.data.data);
 
         } catch (error) {
-            console.log("Error fetching order details from backend:", error);
+            console.error("Error fetching order details from backend:", error);
+            setError(true);
         } finally {
             setLoading(false);
         }
@@ -36,16 +39,16 @@ const Order = () => {
         fetchOrder();
     }, [orderId])
 
-    const handleClick = () => {
-        navigate('/');
-    }
-
     if (loading) {
         return (
             <div className="d-flex flex-column align-items-center justify-content-center text-secondary">
                 Loading your order...
             </div>
         )
+    }
+
+    if (error) {
+        return <Navigate to="/error" replace />;
     }
 
     return (
@@ -72,7 +75,7 @@ const Order = () => {
                                             <Ticket size={18} className="flex-shrink-0" />
                                             <span>Order ID</span>
                                         </div>
-                                        <span className="fw-semibold">{orderId}</span>
+                                        <span className="fw-medium">{orderId}</span>
                                     </ListGroup.Item>
 
                                     <ListGroup.Item className="d-flex justify-content-between gap-3">
@@ -80,7 +83,7 @@ const Order = () => {
                                             <CalendarDays size={18} className="flex-shrink-0" />
                                             <span>Date of Order Placed</span>
                                         </div>
-                                        <span className="fw-semibold">{formateOrderDate(orderData.orderedAt)}</span>
+                                        <span className="fw-medium">{formateOrderDate(orderData.orderedAt)}</span>
                                     </ListGroup.Item>
 
                                     <ListGroup.Item className="d-flex justify-content-between gap-3 ">
@@ -88,7 +91,7 @@ const Order = () => {
                                             <CreditCard size={18} className="flex-shrink-0" />
                                             <span>Payment Mode</span>
                                         </div>
-                                        <span className="fw-semibold">{orderData.paymentMethod}</span>
+                                        <span className="fw-medium">{orderData.paymentMethod}</span>
                                     </ListGroup.Item>
                                 </ListGroup>
                             </Card.Body>
@@ -126,7 +129,8 @@ const Order = () => {
                                                 <House size={18} />
                                             </Col>
                                             <Col>
-                                                {orderData.deliveryAddress.address1}, {orderData.deliveryAddress.address2},
+                                                {orderData.deliveryAddress.address1}, 
+                                                {orderData.deliveryAddress.address2 && `${orderData.deliveryAddress.address2}, `}
                                                 {orderData.deliveryAddress.city} - {orderData.deliveryAddress.pincode}
                                             </Col>
                                         </Row>
@@ -152,7 +156,7 @@ const Order = () => {
                                         />*/}
                                         <div className="row flex-grow-1 align-items-center g-0">
                                             <div className="col-4">
-                                                <span className="fw-semibold">{item.name}</span>
+                                                <span >{item.name}</span>
                                             </div>
 
                                             <div className="col-4 text-center text-secondary">
@@ -217,8 +221,8 @@ const Order = () => {
                 </Card>
 
                 <div className="text-center">
-                    <Button variant="success" className="border-0 fw-semibold shadow" onClick={handleClick}>
-                        HOME
+                    <Button variant="success" className="border-0 fw-semibold shadow" as={Link} to='/menu'>
+                        Explore More Dishes
                     </Button>
                 </div>
             </Container>

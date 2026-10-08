@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
-import { ORDER_API_URL } from "../utils/constants";
+import { ORDER_API_URL } from "../services/api";
 import { CircleCheck, CircleX, OctagonAlert } from 'lucide-react';
 import '../style.css'
 import PaymentStatus from "../components/PaymentStatus";

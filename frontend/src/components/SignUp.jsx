@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import { useForm } from 'react-hook-form';
 import { Modal, Button, Container } from 'react-bootstrap';
-import { isPwdValid } from '../utils/validators';
+import { isPwdValid, FULL_NAME_REGEX, nameValidation } from '../utils/validators';
 import { CircleX } from "lucide-react";
 import { useAuth } from '../hooks/useAuth';
 import '../style.css'
-import { FULL_NAME_REGEX, nameValidation } from '../utils/constants';
 
 const SignUp = ({ show, onHide, forwardTo }) => {
     const {
@@ -72,14 +71,14 @@ const SignUp = ({ show, onHide, forwardTo }) => {
                                 type="text"
                                 className="form-control border-2" placeholder=" "
                                 {...register('uname', {
-                                    required: "Username is required",
+                                    required: "Full name is required",
                                     pattern: {
                                         value: FULL_NAME_REGEX,
                                         message: nameValidation,
                                     },
                                 })}
                             />
-                            <label>Username</label>
+                            <label>Full Name</label>
                             {errors.uname && (
                                 <span className="error-msg">{errors.uname.message}</span>
                             )}

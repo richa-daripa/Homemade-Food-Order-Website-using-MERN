@@ -38,6 +38,7 @@ const Footer = () => {
                             <li className="mb-2 ">Chennai</li>
                             <li className="mb-2 ">Hyderabad</li>
                             <li className="mb-2 ">Mumbai</li>
+                            <li className="mb-2 ">Bengaluru</li>
                         </ul>
                     </Col>
 

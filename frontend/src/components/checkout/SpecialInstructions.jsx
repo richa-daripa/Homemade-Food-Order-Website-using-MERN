@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, Form, Button } from "react-bootstrap";
 import { MessageSquareText } from "lucide-react";
 import { useState } from "react";
-import { instructionOptions } from '../../utils/constants';
+import { instructionOptions } from '../../utils/data';
 
 const SpecialInstructions = ({ register, setValue }) => {
 

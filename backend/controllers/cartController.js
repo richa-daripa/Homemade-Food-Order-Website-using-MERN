@@ -88,9 +88,7 @@ const getCart = async (req, res) => {
             return res.status(404).json({ success: false, message: "User not found" });
         }
 
-        const cartData = user.cartDetails;
-
-        res.status(200).json({ success: true, data: cartData });
+        res.status(200).json({ success: true, data: user.cartDetails || [] });
 
     } catch (error) {
         res.status(500).json({

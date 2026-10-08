@@ -13,12 +13,14 @@ import ScrollToTop from './components/ScrollToTop';
 import PaymentVerification from './pages/PaymentVerification';
 import MyOrders from './pages/MyOrders';
 import ViewOrderDetails from './pages/ViewOrderDetails';
+import ErrorPage from './pages/ErrorPage';
 
 function App() {
   const location = useLocation();
   const hide =
     matchPath("/order/:orderId", location.pathname) ||
-    matchPath("/paymentSuccess", location.pathname);
+    location.pathname === "/paymentSuccess" ||
+    location.pathname === "/error";
 
   return (
     <>
@@ -34,6 +36,7 @@ function App() {
         <Route path='/paymentSuccess' element={<PaymentVerification />} />
         <Route path='/myOrders' element={<MyOrders />} />
         <Route path="/myOrders/:orderId" element={<ViewOrderDetails />} />
+        <Route path="/error" element={<ErrorPage />} />
       </Routes>
       {!hide && <Footer />}
     </>

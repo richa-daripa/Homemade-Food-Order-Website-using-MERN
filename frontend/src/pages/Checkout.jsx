@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { Alert, Button, Col, Card, Container, Form, Row, Modal, Spinner } from 'react-bootstrap';
 import { StoreContext } from '../contexts/ContextAPI';
 import { useForm } from 'react-hook-form';
@@ -10,9 +10,10 @@ import AddressSection from '../components/checkout/AddressSection';
 import PaymentSection from '../components/checkout/PaymentSection';
 import BillSummary from '../components/checkout/BillSummary';
 import SpecialInstructions from '../components/checkout/SpecialInstructions';
-import { cancellationPolicy, ORDER_API_URL } from '../utils/constants';
+import { cancellationPolicy } from '../utils/constants';
 import { getAuthConfig } from '../utils/authAxios';
 import axios from 'axios';
+import { ORDER_API_URL } from '../services/api';
 
 const Checkout = () => {
     const { getTotalAmount, totalQuantity, setCartItems } = useContext(StoreContext);
@@ -21,6 +22,7 @@ const Checkout = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [loadingMsg, setLoadingMsg] = useState()
+    const [error, setError] = useState(false);
 
     const { register, handleSubmit, control, formState: { errors }, watch, setValue } = useForm({ mode: 'onChange' });
 
@@ -60,10 +62,10 @@ const Checkout = () => {
             );
 
             if (data.payment === "Online Payment") {
-                window.location.href = response.data.url;
+                window.location.href = response.data.checkout_url;
                 return;
             }
-            
+
             //for cod
             setCartItems([]);
 
@@ -78,10 +80,19 @@ const Checkout = () => {
 
         } catch (error) {
             console.error("Order placement failed:", error);
-        } finally {
             setLoading(false);
             setLoadingMsg("");
+            setError(true);
+        } finally {
+            if (data.payment !== "Online Payment") {
+                setLoading(false);
+                setLoadingMsg("");
+            }
         }
+    }
+
+    if (error) {
+        return <Navigate to="/error" replace />;
     }
 
     return (

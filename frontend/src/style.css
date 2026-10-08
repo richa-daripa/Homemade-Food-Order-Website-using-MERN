@@ -188,11 +188,6 @@ body {
   }
 }
 
-/*no order*/
-.center-section {
-  min-height: calc(100vh - 200px);
-}
-
 /*cart*/
 .text-wrapping {
   overflow-wrap: break-word;
@@ -212,12 +207,6 @@ body {
   border-color: #efb20a !important;
   background-color: #f7f1cd;
 }
-
-/* Glass effect 
-.glass {
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}*/
 
 /*----------------------------------------------------------*/
 .custom-pointer {
@@ -264,4 +253,8 @@ body {
 .custom-list {
   list-style-type: circle;   
   padding-left: 20px;
+}
+
+.container-width{
+  max-width: 700px;
 }

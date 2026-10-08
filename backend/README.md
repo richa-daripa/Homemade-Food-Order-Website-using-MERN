@@ -64,3 +64,8 @@ GET    /api/reviews/:foodId
 ###
 - Stripe Session = what the customer paid for.
 - Webhook = confirmation of that payment and creation of the final order.
+
+
+### Issues 
+- Simultaneous clicking of add to cart button
+- If someone goes back while processing the payment
