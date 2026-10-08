@@ -105,8 +105,8 @@ const placeOrder = async (req, res) => {
             line_items,
 
             // The ?session_id=... query string is automatically appended by Stripe
-            success_url: "http://localhost:5173/paymentSuccess?session_id={CHECKOUT_SESSION_ID}",
-            cancel_url: "http://localhost:5173/cart",
+            success_url: `${process.env.FRONTEND_URL}/paymentSuccess?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${process.env.FRONTEND_URL}/cart`,
 
             metadata: {
                 userId,

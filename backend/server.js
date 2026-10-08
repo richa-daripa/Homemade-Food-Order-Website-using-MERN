@@ -14,12 +14,12 @@ import adminFoodRouter from './routes/adminFoodRoutes.js';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 app.use(cors());
 
 app.post(
-    "/api/stripe-webhook", //localhost:5000/api/stripe-webhook
+    "/api/stripe-webhook", 
     express.raw({ type: "application/json" }),
     stripeWebhook
 );
@@ -38,6 +38,7 @@ app.use("/api/admin/foods", adminFoodRouter);
 app.use("/api/admin/orders", adminOrderRouter);
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-    console.log(`API is accessible at: http://localhost:${PORT}/`);
+    console.log(`Server running on port ${PORT}`);
+    console.log(`API is accessible at: http://localhost:${PORT}/`)
 })
+

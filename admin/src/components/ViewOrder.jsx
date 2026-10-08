@@ -22,8 +22,8 @@ const ViewOrder = ({ selectedOrder, setSelectedOrder, setViewOrderModal, viewOrd
                         <div className='border-bottom pb-1 border-2'>
                             <strong className="d-block mb-2">Items Ordered</strong>
                             <ListGroup variant="flush">
-                                {selectedOrder?.items?.map(order => (
-                                    <ListGroup.Item className="d-flex justify-content-between align-items-start">
+                                {selectedOrder?.items?.map((order,index)=> (
+                                    <ListGroup.Item key={index} className="d-flex justify-content-between align-items-start">
                                         <div className="ms-2 me-auto">
                                             <div>{order.name}</div>
                                             <small className='text-secondary'>Qty: {order.quantity} x ₹{order.unitPrice}</small>
