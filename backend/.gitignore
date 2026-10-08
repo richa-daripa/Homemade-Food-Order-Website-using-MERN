@@ -19,3 +19,5 @@ yarn-error.log*
 # Operating System files (System garbage files)
 .DS_Store
 Thumbs.db
+
+.vercel
