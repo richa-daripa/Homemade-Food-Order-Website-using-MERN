@@ -31,22 +31,22 @@ const Orders = () => {
     fetchAllOrders();
   }, []);
 
-  const handlePaymentStatus = async (orderId, status) => {
+  const handlePaymentStatus = async (orderId, paymentStatus ) => {
     try {
       await axios.put(`${ADMIN_ORDERS_API_URL}/${orderId}/payment-status`,
-        { status: status }
+        { paymentStatus: paymentStatus }
       );
 
       setOrders((prev) => (
         prev.map(order => (
           order._id === orderId
-            ? { ...order, status }
+            ? { ...order, paymentStatus: paymentStatus }
             : order
         ))
       ));
       toast.success(`Payment status updated for Order No.: ${orderId}`)
     } catch (error) {
-      toast.error("Error updating payment status");
+      toast.error(error.response?.data?.message || "Error updating payment status");
     }
   }
 
@@ -58,13 +58,15 @@ const Orders = () => {
       setOrders((prev) => (
         prev.map(order => (
           order._id === orderId
-            ? { ...order, status }
+            ? {
+              ...order, status: status,
+            }
             : order
         ))
       ));
       toast.success(`Order status updated for Order No.: ${orderId}`)
     } catch (error) {
-      toast.error("Error updating order status");
+      toast.error(error.response?.data?.message || "Error updating order status");
     }
   }
 
@@ -132,7 +134,7 @@ const Orders = () => {
                     disabled={order.status === "Order Delivered"}
                     onChange={(e) => handleOrderStatus(order._id, e.target.value)}>
                     <option value="Food is Preparing">Food is Preparing</option>
-                    <option value="Out_for Delivery">Out for Delivery</option>
+                    <option value="Out for Delivery">Out for Delivery</option>
                     <option value="Order Delivered">Order Delivered</option>
                   </Form.Select>
                 </td>

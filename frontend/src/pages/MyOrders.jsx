@@ -109,7 +109,7 @@ const MyOrders = () => {
                                 </div>
                                 <div
                                     className={`d-flex align-items-center gap-3 px-4 py-2 rounded-pill ${statusUI.className}`}>
-                                    <StatusIcon color={statusUI.color} size={32} />
+                                    <StatusIcon color={statusUI.color} size={30} />
                                     <div>
                                         <span >{order.status}</span>
                                     </div>

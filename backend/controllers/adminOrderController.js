@@ -22,24 +22,28 @@ export const updateOrderStatus = async (req, res) => {
         const { orderId } = req.params;
         const { status } = req.body;
 
-        const order = await orderModel.findByIdAndUpdate(
-            orderId,
-            { status: status },
-            { new: true, runValidators: true }
-        )
+        const order = await orderModel.findById(orderId);
+
         if (!order) {
             return res.status(400).json({
                 success: false, message: "Order not found",
             });
         }
+
         if (order.status === "Order Delivered") {
             return res.status(400).json({
-                message: "Delivered orders cannot be updated"
+                success: false, message: "Delivered orders cannot be updated"
             });
         }
+        // Update order status
+        order.status = status;
+
+        await order.save();
+
         res.status(200).json({
-            success: true, message: "Order status updated successfully"
+            success: true, message: "Order status updated successfully", data: order
         })
+
     } catch (error) {
         res.status(500).json({
             success: false, message: "Failed to update order status", details: error.message
@@ -48,27 +52,38 @@ export const updateOrderStatus = async (req, res) => {
 }
 
 //update payment status for an order
-
 export const updatePaymentStatus = async (req, res) => {
     try {
         const { orderId } = req.params;
         const { paymentStatus } = req.body;
 
-        const order = await orderModel.findByIdAndUpdate(
-            orderId,
-            { paymentStatus: paymentStatus },
-            { new: true, runValidators: true }
-        )
+        const order = await orderModel.findById(orderId);
+
         if (!order) {
             return res.status(400).json({
                 success: false, message: "Order not found",
             });
         }
+
         if (order.paymentMethod !== "Cash on Delivery") {
             return res.status(400).json({
-                message: "Payment status can only be updated for COD orders"
+                success: false, message: "Payment status can only be updated for COD orders"
             });
         }
+
+        // Payment is already marked as Paid
+        if (order.paymentStatus === "Paid") {
+            return res.status(400).json({
+                success: false,
+                message: "Payment status is already Paid and cannot be changed",
+            });
+        }
+
+        // Update payment status
+        order.paymentStatus = paymentStatus;
+
+        await order.save();
+
         res.status(200).json({
             success: true, message: "Payment status updated successfully"
         })
@@ -84,7 +99,7 @@ export const viewOrder = async (req, res) => {
     try {
         const { orderId } = req.params;
 
-        const order = orderModel.findById(orderId);
+        const order = await orderModel.findById(orderId);
 
         if (!order) {
             return res.status(400).json({
