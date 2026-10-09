@@ -1,7 +1,7 @@
 import userModel from '../models/UserSchema.js'
 import orderModel from '../models/OrderSchema.js'
 import Stripe from 'stripe'
-import { deliveryFee, GST, packagingFee } from '../../frontend/src/utils/constants.js'
+import { deliveryFee, GST, packagingFee, CHARGES_AND_TAXES } from '../util/constants.js'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
@@ -29,7 +29,7 @@ const placeOrder = async (req, res) => {
         const amount = user.cartDetails.reduce(
             (total, item) => total + item.unitPrice * item.quantity, 0);
 
-        const totalAmount = amount + deliveryFee + GST + packagingFee;
+        const totalAmount = amount + CHARGES_AND_TAXES;
 
         //======================= COD =========================================
         if (paymentMethod === "Cash on Delivery") {
