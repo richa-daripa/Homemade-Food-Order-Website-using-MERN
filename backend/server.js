@@ -14,7 +14,6 @@ import adminFoodRouter from './routes/adminFoodRoutes.js';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT;
 
 //app.use(cors());
 
@@ -43,16 +42,11 @@ app.use("/api/orders", orderRouter);
 app.use("/api/admin/foods", adminFoodRouter);
 app.use("/api/admin/orders", adminOrderRouter);
 
-//app.listen(PORT, () => {
-//    console.log(`Server running on port ${PORT}`);
-//    console.log(`API is accessible at: http://localhost:${PORT}/`)
-//})
-
 // Local development listener
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
 
-module.exports = app;
+export default app;
 
