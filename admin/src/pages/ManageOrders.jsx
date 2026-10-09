@@ -5,7 +5,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import { MdViewList } from "react-icons/md";
 import { toast } from 'react-toastify';
-import { formateOrderDate } from '../../../frontend/src/utils/formatting'
+import { formateOrderDate } from '../util/formateDate'
 import ViewOrder from '../components/ViewOrder'
 import { ADMIN_ORDERS_API_URL } from '../util/api'
 

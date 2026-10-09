@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, ListGroup, Modal } from 'react-bootstrap'
-import { deliveryFee, GST, packagingFee } from '../../../frontend/src/utils/constants';
+import { deliveryFee, GST, packagingFee } from '../util/constants';
 
 const ViewOrder = ({ selectedOrder, setSelectedOrder, setViewOrderModal, viewOrderModal }) => {
 
