@@ -4,7 +4,6 @@ import babel from '@rolldown/plugin-babel'
 
 // https://vite.dev/config/
 export default defineConfig({
-  root: process.cwd(), // Forces Vite to treat the current directory (admin) as the absolute root
   plugins: [
     react(),
     babel({ presets: [reactCompilerPreset()] })
