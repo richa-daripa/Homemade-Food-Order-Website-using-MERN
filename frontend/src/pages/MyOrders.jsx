@@ -74,7 +74,7 @@ const MyOrders = () => {
     return (
         <Container className='vh-100'>
             <h3 className='my-4 py-4'>My Orders</h3>
-            <Container>
+            <Container className='mb-4'>
                 {orderList.map((order, index) => {
                     // Get the icon, color and background based on order.status
                     const statusUI = getOrderStatus(order.status);
