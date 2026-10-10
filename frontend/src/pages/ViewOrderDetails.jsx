@@ -42,9 +42,11 @@ const ViewOrderDetails = () => {
 
     if (loading) {
         return (
-            <div className="d-flex flex-column align-items-center justify-content-center text-secondary">
-                Loading your order details...
-            </div>
+            <Container className="vh-100 d-flex justify-content-center align-items-center">
+                <p className="text-secondary">
+                    Loading you order's details...
+                </p>
+            </Container>
         )
     }
 
