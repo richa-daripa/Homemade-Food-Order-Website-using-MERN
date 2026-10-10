@@ -19,38 +19,22 @@ const adminFoodRouter = express.Router();
 //
 //const upload = multer({ storage });
 
-let upload;
+// Configure Cloudinary globally
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
-if (process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY) {
-    // Configure Cloudinary for Production
-    cloudinary.config({
-        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-        api_key: process.env.CLOUDINARY_API_KEY,
-        api_secret: process.env.CLOUDINARY_API_SECRET
-    });
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: "eatzio-uploads",
+        allowed_formats: ["jpg", "png", "jpeg", "webp"]
+    }
+});
 
-    const storage = new CloudinaryStorage({
-        cloudinary: cloudinary,
-        params: {
-            folder: "eatzio-uploads",
-            allowed_formats: ["jpg", "png", "jpeg", "webp"]
-        }
-    });
-
-    upload = multer({ storage });
-} else {
-    // Fallback to local disk storage for local development (if Cloudinary isn't set up locally yet)
-    const storage = multer.diskStorage({
-        destination: (req, file, cb) => {
-            cb(null, "uploads/");
-        },
-        filename: (req, file, cb) => {
-            const uniqueName = `${Date.now()}-${file.originalname}`;
-            cb(null, uniqueName);
-        }
-    });
-    upload = multer({ storage });
-}
+const upload = multer({ storage });
 
 adminFoodRouter.post("/",
     upload.single("image"),  // "image" should match the frontend field name

@@ -5,7 +5,6 @@ import '../style.css'
 import rating_star from '../assets/rating_starts.png';
 import { useAuth } from '../hooks/useAuth';
 import { checkAvailability } from '../utils/checkAvailability';
-import { IMAGE_URL } from '../services/api';
 
 const DishCard = ({ itemObj, setShow }) => {
     const { addToCart } = useContext(StoreContext);
@@ -26,7 +25,7 @@ const DishCard = ({ itemObj, setShow }) => {
     return (
         <Card className="bg-dark shadow border-0 h-100 rounded-4 w-100" >
             <Card.Img variant="top" 
-            src={`${IMAGE_URL}/${image}`} 
+            src={image}
             className='rounded-top-4' />
             <CardImgOverlay className='d-flex align-items-end justify-content-end'>
                 <Button variant="warning" size='sm' className='w-50 fs-6'

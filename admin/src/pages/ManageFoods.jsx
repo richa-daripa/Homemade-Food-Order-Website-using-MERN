@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { ADMIN_FOOD_API_URL, FOOD_API_URL, IMAGE_URL } from '../util/api';
+import { ADMIN_FOOD_API_URL, FOOD_API_URL } from '../util/api';
 import { Button, Card, Col, Container, Row, Spinner, Badge, } from "react-bootstrap";
 import { Pencil, Trash2, Plus } from "lucide-react";
 import { Link } from 'react-router-dom';
@@ -76,7 +76,7 @@ const Foods = () => {
 
                             <Col lg={2} md={3} sm={4} xs={12} className="text-center mb-3 mb-md-0">
                                 <img
-                                    src={`${IMAGE_URL}/${food.image}`}
+                                    src={food.image}
                                     alt={food.name}
                                     className="img-fluid rounded-3 image-display"
                                 />

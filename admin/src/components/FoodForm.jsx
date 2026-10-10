@@ -3,7 +3,6 @@ import { Container, Form, Row, Col, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { foodCategory } from '../util/config'
 import { ImageUp } from 'lucide-react'
-import { IMAGE_URL } from '../util/api'
 
 const FoodForm = ({ foodData, setFoodData, onSubmit, submitText }) => {
 
@@ -19,7 +18,7 @@ const FoodForm = ({ foodData, setFoodData, onSubmit, submitText }) => {
 
     // Existing image from server
     if (typeof foodData.image === "string") {
-      setImagePreview(`${IMAGE_URL}/${foodData.image}`);
+      setImagePreview(foodData.image);
       return;
     }
 

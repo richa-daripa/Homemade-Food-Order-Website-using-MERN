@@ -2,7 +2,6 @@ import { StoreContext } from "../contexts/ContextAPI";
 import { useContext } from "react";
 import { ListGroup, Row, Col, Button } from "react-bootstrap";
 import { SquarePlus, SquareMinus, Trash2 } from 'lucide-react';
-import { IMAGE_URL } from "../services/api";
 
 const CartItem = ({ itemObj }) => {
     const { cartItems, addToCart, removeFromCart, handleDeleteConfirm } = useContext(StoreContext);
@@ -17,7 +16,7 @@ const CartItem = ({ itemObj }) => {
         <ListGroup.Item className="border rounded-2 p-3">
             <Row className="align-items-center g-3">
                 <Col xs={6} md="auto" className="text-center">
-                    <img src={`${IMAGE_URL}/${image}`} alt="" width="160" height="140" className="img-fluid" />
+                    <img src={image} alt="" width="160" height="140" className="img-fluid" />
                 </Col>
                 <Col xs={6} md={4}>
                     <h5 >{name}</h5>

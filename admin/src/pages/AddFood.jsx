@@ -34,16 +34,6 @@ const AddFood = () => {
 
       const response = await axios.post(`${ADMIN_FOOD_API_URL}/`, formData)
 
-      //if (response.status === 201 || response.status === 200) {
-      //  // Reset form
-      //  setFoodData(initialState);
-      //  setImagePreview(null);
-      //
-      //  // Reset file input
-      //  fileInputRef.current.value = "";
-      //
-      //  toast.success(response.data.message);
-      //}
       setFoodData(initialState);
       toast.success(response.data.message);
 

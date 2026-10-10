@@ -5,7 +5,6 @@ import '../style.css'
 import CartItem from "../components/CartItem";
 import cooking_food from '../assets/img4.png';
 import BillDetails from "../components/BillDetails";
-import { IMAGE_URL } from "../services/api";
 import { Navigate } from "react-router-dom";
 
 const Cart = () => {
@@ -57,7 +56,7 @@ const Cart = () => {
                 <Modal.Body className="d-flex flex-column gap-3 p-3 mt-2 mx-2">
                     <Row className="align-items-center">
                         <div className="col-12 col-md-4 mb-3 mb-md-0 text-center">
-                            <img src={`${IMAGE_URL}/${deleteItem?.image}`} alt="Item to be removed"
+                            <img src={deleteItem?.image} alt="Item to be removed"
                                 className="img-fluid" width="150px" height="120px" />
                         </div>
                         <div className="col-12 col-md-8 d-grid gap-3">

@@ -149,7 +149,7 @@ const Order = () => {
                                 <ListGroup.Item key={item.foodId} as="li">
                                     <div className="d-flex align-items-center gap-3">
                                         {/*<img
-                                            src={`${IMAGE_URL}/${item.image}`}
+                                            src={item.image}
                                             width={80}
                                             height={60}
                                             className="d-none d-md-block rounded-3"

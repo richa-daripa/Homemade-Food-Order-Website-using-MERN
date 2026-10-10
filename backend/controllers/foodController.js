@@ -1,16 +1,18 @@
 import foodModel from "../models/FoodSchema.js";
-import fs from 'fs';
+import { v2 as cloudinary } from "cloudinary";
 
 // add a food item
 export const addFood = async (req, res) => {
     try {
         const { name, price, description, category } = req.body;
 
-        const image = req.file ? req.file.filename : "";
+        const image = req.file ? req.file.path : "";
 
         const savedFood = await foodModel.create({
             name, image, description, price, category
         });
+
+        console.log(image);
 
         res.status(200).json({
             success: true, message: "Food added successfully", data: savedFood
@@ -50,7 +52,24 @@ export const removeFood = async (req, res) => {
             });
         }
 
-        fs.unlink(`uploads/${deletedFood.image}`, () => { })
+        // Delete image from Cloudinary if the image URL exists and belongs to Cloudinary
+        if (deletedFood.image && deletedFood.image.includes("cloudinary.com")) {
+            try {
+                // Extract public ID from Cloudinary URL
+                const urlParts = deletedFood.image.split("/");
+                const uploadIndex = urlParts.indexOf("upload");
+                
+                if (uploadIndex !== -1) {
+                    // Get everything after 'upload/vXXXXXXX/' up to the file extension
+                    const publicIdWithExtension = urlParts.slice(uploadIndex + 2).join("/");
+                    const publicId = publicIdWithExtension.substring(0, publicIdWithExtension.lastIndexOf("."));
+
+                    await cloudinary.uploader.destroy(publicId);
+                }
+            } catch (cloudErr) {
+                console.error("Error deleting image from Cloudinary:", cloudErr.message);
+            }
+        }
 
         res.status(200).json({
             success: true, message: "Food deleted successfully", data: deletedFood
@@ -77,28 +96,32 @@ export const editFood = async (req, res) => {
         const { name, price, description, category } = req.body;
         const updatedData = { name, price, description, category };
 
-        if (req.file && existingFood.image) {
-
-            //Delete old image from upload folder
-            fs.unlink(`uploads/${existingFood.image}`, (err) => {
-                if (err) {
-                    console.error("Error deleting image:", err);
+        // If a new image is uploaded, handle Cloudinary replacement
+        if (req.file) {
+            // 1. Delete the old image from Cloudinary if it exists
+            if (existingFood.image && existingFood.image.includes("cloudinary.com")) {
+                try {
+                    const urlParts = existingFood.image.split("/");
+                    const uploadIndex = urlParts.indexOf("upload");
+                    
+                    if (uploadIndex !== -1) {
+                        const publicIdWithExtension = urlParts.slice(uploadIndex + 2).join("/");
+                        const publicId = publicIdWithExtension.substring(0, publicIdWithExtension.lastIndexOf("."));
+                        await cloudinary.uploader.destroy(publicId);
+                    }
+                } catch (cloudErr) {
+                    console.error("Error deleting old image from Cloudinary:", cloudErr.message);
                 }
-            });
-            //Save updated image
-            updatedData.image = req.file.filename;
+            }
+
+            // 2. Assign the new Cloudinary secure URL from req.file.path
+            updatedData.image = req.file.path;
         }
 
         const updatedFood = await foodModel.findByIdAndUpdate(
             id, updatedData, { new: true, runValidators: true }
         );
 
-        //if (!updatedFood) {
-        //    return res.status(404).json({
-        //        success: false,
-        //        message: "Food item not found"
-        //    });
-        //}
         res.status(200).json({
             success: true, message: "Food updated successfully", data: updatedFood
         });
