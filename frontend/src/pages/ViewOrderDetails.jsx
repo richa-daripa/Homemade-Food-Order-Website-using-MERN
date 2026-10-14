@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
-import { Badge, Card, Container, ListGroup, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Badge, Card, Container, ListGroup, OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap'
 import { Navigate, useParams } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { getAuthConfig } from '../utils/authAxios';
@@ -42,11 +42,9 @@ const ViewOrderDetails = () => {
 
     if (loading) {
         return (
-            <Container className="vh-100 d-flex justify-content-center align-items-center">
-                <p className="text-secondary">
-                    Loading you order's details...
-                </p>
-            </Container>
+            <div className='d-flex justify-content-center align-items-center vh-100'>
+                <Spinner animation='border' variant='primary' />
+            </div>
         )
     }
 

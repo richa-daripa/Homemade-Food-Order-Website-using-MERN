@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
-import { Card, Container, Row, Col, Button, ListGroup } from "react-bootstrap";
+import { Card, Container, Row, Col, Button, ListGroup, Spinner } from "react-bootstrap";
 import { CalendarDays, CircleCheckBig, CreditCard, House, IndianRupee, Phone, Ticket, User } from "lucide-react";
 import { CHARGES_AND_TAXES } from "../utils/constants";
 import '../style.css'
@@ -41,8 +41,8 @@ const Order = () => {
 
     if (loading) {
         return (
-            <div className="d-flex flex-column align-items-center justify-content-center text-secondary">
-                Loading your order...
+            <div className='d-flex justify-content-center align-items-center vh-100'>
+                <Spinner animation='border' variant='success' />
             </div>
         )
     }
@@ -129,7 +129,7 @@ const Order = () => {
                                                 <House size={18} />
                                             </Col>
                                             <Col>
-                                                {orderData.deliveryAddress.address1}, 
+                                                {orderData.deliveryAddress.address1},
                                                 {orderData.deliveryAddress.address2 && `${orderData.deliveryAddress.address2}, `}
                                                 {orderData.deliveryAddress.city} - {orderData.deliveryAddress.pincode}
                                             </Col>

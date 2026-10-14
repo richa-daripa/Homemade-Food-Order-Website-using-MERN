@@ -23,7 +23,7 @@ const DishCard = ({ itemObj, setShow }) => {
     }
 
     return (
-        <Card className="bg-dark shadow border-0 h-100 rounded-4 w-100" >
+        <Card className="bg-dark shadow border-0 h-100 rounded-4 w-100">
             <Card.Img variant="top" 
             src={image}
             className='rounded-top-4' />

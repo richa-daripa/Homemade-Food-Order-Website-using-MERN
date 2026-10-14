@@ -44,7 +44,7 @@ const MyOrders = () => {
         return (
             <Container className="vh-100 d-flex justify-content-center align-items-center">
                 <p className="text-secondary">
-                    Loading orders...
+                    Loading your orders...
                 </p>
             </Container>
         )
@@ -90,7 +90,7 @@ const MyOrders = () => {
                                 </div>
                             </Card.Header>
                             <Card.Body className='d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3'>
-                                <div>
+                                <div className='flex-grow-1' style={{ maxWidth: "280px", minWidth: "180px" }}>
                                     {order.items.slice(0, 2).map((item, index) => (
                                         <div key={index} >
                                             {item.name} × {item.quantity}

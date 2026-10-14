@@ -15,9 +15,6 @@ dotenv.config();
 
 const app = express();
 
-//app.use(cors());
-
-// Enable CORS for frontend and admin client domains
 app.use(cors({
     origin: [process.env.FRONTEND_URL, process.env.ADMIN_URL],
     credentials: true
@@ -34,7 +31,6 @@ app.use(express.json());
 connectDB();
 
 app.use("/api/foods", foodRouter);
-app.use("/images", express.static('uploads'));  //url for getting the uploaded images
 app.use("/api/users", userRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/orders", orderRouter);
