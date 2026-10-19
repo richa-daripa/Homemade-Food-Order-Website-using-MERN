@@ -39,10 +39,10 @@ const DesktopMenu = ({ openLogin, openSignUp }) => {
                                     <p className='px-3'>Hi, {user?.displayName}</p>
                                     <DropdownDivider />
                                     <Dropdown.Item ><UserRound size={18} className='me-2' />Profile</Dropdown.Item>
-                                    <Dropdown.Item as={Link} to="/myOrders"><PaperBag size={18} className='me-2' />My Orders</Dropdown.Item>
+                                    <Dropdown.Item as={Link} to="/myOrders"><PaperBag size={18} className='me-2' />Orders</Dropdown.Item>
                                     <DropdownDivider />
                                     <Dropdown.Item onClick={logout} className='d-flex align-items-center'>
-                                        <LogOut size={18} className='me-2' />Log Out
+                                        <LogOut size={18} className='me-2' />LogOut
                                     </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>

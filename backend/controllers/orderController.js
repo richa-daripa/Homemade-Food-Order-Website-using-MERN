@@ -195,7 +195,7 @@ const userOrders = async (req, res) => {
 
         const orders = await orderModel.find({
             userId
-        })
+        }).sort({ orderedAt: -1 });
 
         if (!orders) {
             return res.status(404).json({

@@ -49,9 +49,9 @@ const MobileMenu = ({openLogin}) => {
                   {cartTotal}
                 </span>
               </Nav.Link>
-              <Nav.Link as={Link} to="/myOrders" className="text-warning border border-secondary ps-3 rounded d-flex align-items-center"><PaperBag size={18} className='me-2' />My Orders</Nav.Link>
+              <Nav.Link as={Link} to="/myOrders" className="text-warning border border-secondary ps-3 rounded d-flex align-items-center"><PaperBag size={18} className='me-2' />Orders</Nav.Link>
               <Nav.Link href="#profile" className="text-warning border border-secondary ps-3 rounded d-flex align-items-center"><UserRound size={18} className='me-2' />Profile</Nav.Link>
-              <Nav.Link className="text-warning border border-secondary ps-3 rounded d-flex align-items-center" onClick={logout}><LogOut size={18} className='me-2' />Log Out</Nav.Link>
+              <Nav.Link className="text-warning border border-secondary ps-3 rounded d-flex align-items-center" onClick={logout}><LogOut size={18} className='me-2' />LogOut</Nav.Link>
             </>
           ) : (
             <Button className="custom-button-color" onClick={openLogin}>

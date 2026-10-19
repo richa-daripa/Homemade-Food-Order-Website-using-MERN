@@ -20,7 +20,7 @@ export const formateOrderDate = (date) => {
         hour: "numeric",
         minute: "2-digit",
         hour12: true
-    }).replace("am", "AM").replace("pm", "PM");
+    })
 };
 
 export const getOrderStatus = (status) => {

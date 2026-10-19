@@ -66,13 +66,13 @@ const ViewOrderDetails = () => {
                                 <StatusIcon size={42} color={statusUI.color} />{order.status}</h4>
                         </Card.Header>
                         <Card.Body>
-                            <small className="d-block mb-2 text-secondary">{order.items.length} items in order</small>
+                            <small className="d-block mb-2 text-secondary fw-bold">{order.items.length} ITEMS IN ORDER</small>
                             <ListGroup as="ul" variant='flush'>
                                 {order.items.map((item, index) => (
                                     <ListGroup.Item key={index} as="li"
-                                        className="d-flex justify-content-between align-items-start"
+                                        className="d-flex justify-content-between align-items-start p-2"
                                     >
-                                        <div className="ms-2 me-auto">
+                                        <div>
                                             {item.name}
                                             <small className='text-secondary ms-2'>x {item.quantity}</small>
                                         </div>
@@ -120,12 +120,12 @@ const ViewOrderDetails = () => {
                         <Card.Body>
                             <Card.Title>Order Details</Card.Title>
                             <div>
-                                <small className="text-secondary d-block">Order ID</small>
-                                <span>#OD{order._id}</span>
+                                <small className="text-secondary d-block">ORDER ID</small>
+                                <span>#OD{order._id.toString().toUpperCase()}</span>
                             </div>
                             <div className='my-4'>
                                 <small className="text-secondary d-block">
-                                    Delivery To
+                                    DELIVERY TO
                                 </small>
                                 <div>
                                     <span className='fw-medium text-muted'>
@@ -134,13 +134,11 @@ const ViewOrderDetails = () => {
                                     <br />
                                     {address1} {address2 && `, ${address2}`}, {city} - {pincode}
                                     <br />
-                                    <span className='text-muted'>
-                                        Mobile: {phone}
-                                    </span>
+                                    <span className='text-muted'> +91 {phone} </span>
                                 </div>
                             </div>
                             <div>
-                                <small className="text-secondary d-block">Order Placed at</small>
+                                <small className="text-secondary d-block">ORDER PLACED AT</small>
                                 <span>{formateOrderDate(order.orderedAt)}</span>
                             </div>
                         </Card.Body>
@@ -164,7 +162,7 @@ const ViewOrderDetails = () => {
                             <div className="d-flex justify-content-between align-items-center">
                                 <div>
                                     <small className="text-secondary d-block">
-                                        Payment Method
+                                        PAYMENT METHOD
                                     </small>
                                     <span>
                                         {order.paymentMethod}
@@ -173,7 +171,7 @@ const ViewOrderDetails = () => {
                                 <div className="text-end">
                                     <small className="text-secondary d-block">
                                         {
-                                            order.paymentStatus === 'Paid' ? "Amount Paid" : "Amount To Pay"
+                                            order.paymentStatus === 'Paid' ? "AMOUNT PAID" : "AMOUNT TO PAY"
                                         }
                                     </small>
                                     <span className="fw-semibold">

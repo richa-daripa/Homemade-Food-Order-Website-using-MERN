@@ -67,31 +67,39 @@ const Order = () => {
                 <Row className="g-4 mb-4">
                     <Col md={6}>
                         <Card className="h-100 rounded-4">
-                            <Card.Body >
-                                <Card.Title className="m-3">Order Details</Card.Title>
+                            <Card.Body className="p-4">
+                                <Card.Title className="mb-3">
+                                    Order Details
+                                </Card.Title>
                                 <ListGroup variant="flush">
-                                    <ListGroup.Item className="d-flex justify-content-between gap-3">
+                                    <ListGroup.Item className="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2 px-0 py-2">
                                         <div className="d-flex align-items-center gap-2 text-secondary">
                                             <Ticket size={18} className="flex-shrink-0" />
                                             <span>Order ID</span>
                                         </div>
-                                        <span className="fw-medium">{orderId}</span>
+                                        <span className="fw-medium">
+                                            #OD{orderId.toUpperCase().slice(0,13)}
+                                        </span>
                                     </ListGroup.Item>
 
-                                    <ListGroup.Item className="d-flex justify-content-between gap-3">
+                                    <ListGroup.Item className="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2 px-0 py-2">
                                         <div className="d-flex align-items-center gap-2 text-secondary">
                                             <CalendarDays size={18} className="flex-shrink-0" />
                                             <span>Date of Order Placed</span>
                                         </div>
-                                        <span className="fw-medium">{formateOrderDate(orderData.orderedAt)}</span>
+                                        <span className="fw-medium text-break">
+                                            {formateOrderDate(orderData.orderedAt)}
+                                        </span>
                                     </ListGroup.Item>
 
-                                    <ListGroup.Item className="d-flex justify-content-between gap-3 ">
-                                        <div className="d-flex align-items-center gap-2 text-secondary ">
+                                    <ListGroup.Item className="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2 px-0 py-2">
+                                        <div className="d-flex align-items-center gap-2 text-secondary">
                                             <CreditCard size={18} className="flex-shrink-0" />
                                             <span>Payment Mode</span>
                                         </div>
-                                        <span className="fw-medium">{orderData.paymentMethod}</span>
+                                        <span className="fw-medium text-break">
+                                            {orderData.paymentMethod}
+                                        </span>
                                     </ListGroup.Item>
                                 </ListGroup>
                             </Card.Body>

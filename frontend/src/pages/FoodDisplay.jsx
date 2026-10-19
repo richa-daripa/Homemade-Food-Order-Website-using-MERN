@@ -60,7 +60,7 @@ const FoodDisplay = () => {
         setSearchParams(params);
     };
 
-    if(error){
+    if (error) {
         return <Navigate to="/error" replace />;
     }
 
@@ -78,7 +78,7 @@ const FoodDisplay = () => {
             </div>
             <div className="d-flex justify-content-center align-items-center mt-2 translate-middle position-fixed start-50 z-3">
                 <Toast onClose={() => setShow(false)} show={show} delay={1000} autohide className='z-3 rounded-5 bg-transparent'>
-                    <Toast.Body className='d-flex align-items-center justify-content-center text-center bg-dark bg-opacity-75 text-white glass rounded-5 p-2'> 
+                    <Toast.Body className='d-flex align-items-center justify-content-center text-center bg-dark bg-opacity-75 text-white glass rounded-5 p-2'>
                         <FcOk className='me-2 fs-5' />Added To Plate</Toast.Body>
                 </Toast>
             </div>
@@ -89,7 +89,7 @@ const FoodDisplay = () => {
                     <div className='col-auto'>
                         <p className='fs-5 '>Showing 0 result</p>
                     </div>
-                    <div className='col-auto '>
+                    <div className='col-auto'>
                         <Form.Select onChange={handleChange}>
                             {Object.entries(sortingOptions).map(([key, label]) => (
                                 <option key={key} value={key}>
@@ -99,7 +99,7 @@ const FoodDisplay = () => {
                         </Form.Select>
                     </div>
                 </Row>
-                <Row className="justify-content-center g-5">
+                <Row className="justify-content-center g-2 g-md-5">
                     {filteredFoods.map((items, index) => (
                         <Col key={index} xs={12} sm={6} md={4} lg={3} className="d-flex justify-content-center">
                             <DishCard key={items._id} itemObj={items} setShow={setShow} />

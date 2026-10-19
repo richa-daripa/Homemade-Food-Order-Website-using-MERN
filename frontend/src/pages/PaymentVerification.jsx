@@ -121,7 +121,7 @@ const PaymentVerification = () => {
                 showSpinner={true}
                 title="Payment Received"
                 message="We're still confirming your order..."
-                buttonText="Go to My Orders"
+                buttonText="Go to Orders"
                 handleClick={() => navigate("/myOrders")}
             />
         );

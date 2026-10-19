@@ -30,7 +30,7 @@ const DishCard = ({ itemObj, setShow }) => {
             <CardImgOverlay className='d-flex align-items-end justify-content-end'>
                 <Button variant="warning" size='sm' className='w-50 fs-6'
                     disabled={!available} onClick={handleClick}>
-                    {available ? "Add" : "Unavailable"}
+                    {available ? "ADD" : "Unavailable"}
                 </Button>
             </CardImgOverlay>
             <Card.Body className='d-flex flex-column'>
